@@ -1,0 +1,119 @@
+name: Nightly Server Build
+
+
+on: 
+  schedule:
+    - cron: '0 3 * * *' # 3:00am UTC every day
+  workflow_dispatch:
+
+
+jobs:
+  check_status:
+    runs-on: [linux,x64]
+    outputs:
+      workflow_id: ${{ steps.check_status.outputs.workflow_id }}
+    steps:
+      - name: Check Status of GTNH Workflow
+        id: check_status
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/GTNewHorizons/DreamAssemblerXXL/actions/workflows/nightly-modpack-build.yml/runs?status=completed&branch=master")
+          
+          last_run_status=$(echo "$response" | jq -r '.workflow_runs[0].conclusion')
+          last_run_id=$(echo "$response" | jq -r '.workflow_runs[0].id')
+
+          echo "::debug::Last run status: $last_run_status"
+        
+
+          if [ "$last_run_status" = "success" ]; then
+            echo "::debug::last_run_id : $last_run_id"
+            echo "Workflow completed successfully. Triggering dependent workflow."
+            echo "workflow_id=$last_run_id" >> $GITHUB_OUTPUT
+          else
+            echo "No successful workflow detected. Exiting."
+            exit 1
+          fi
+
+  trigger_nightly_pre_build:
+    needs: check_status
+    if: ${{ needs.check_status.outputs.workflow_id }} != ''
+    runs-on: [linux,x64]
+    steps:
+      - name: Run Nightly Server Build Workflow
+        run: echo "Triggering workflow!"
+      - name: Getting important Links and Tags
+        id: wf-tags-and-links
+        env:
+          WF_ID: ${{ needs.check_status.outputs.workflow_id }}
+        run: |
+
+          echo "::debug:: Id: '$WF_ID'"
+
+          response=$(curl -s \
+            "https://api.github.com/repos/GTNewHorizons/DreamAssemblerXXL/actions/runs/$WF_ID")
+          artifacts=$(curl -S \
+            "https://api.github.com/repos/GTNewHorizons/DreamAssemblerXXL/actions/runs/$WF_ID/artifacts")
+          
+          echo "::debug:: Action_Respone : $response"
+          echo "::debug:: Artifacts : $artifacts"
+
+          serverartifact=$(echo "$artifacts" | jq '.artifacts[] | select(.name | contains("server-new-java"))')
+          filename=$(echo "$serverartifact" | jq '.name')
+          download_path=$(echo "$serverartifact" | jq '.archive_download_url')
+          echo "filename=$filename" >> $GITHUB_OUTPUT
+          echo "download_path=$download_path" >> $GITHUB_OUTPUT
+          
+          build_date=$(echo "$filename" | grep -oP '\d{4}-\d{2}-\d{2}')
+          build_version=$(echo "$filename" | grep -oP '(?<=\+)\d+')
+          build_version_plus_date="$build_date_$build_version"
+          gtnh_commit_hash=$(echo "$serverartifact" | jq '.workflow_run.head_sha')
+
+          echo "build_date=$build_date" >> $GITHUB_OUTPUT
+          echo "build_version=$build_version" >> $GITHUB_OUTPUT
+          echo "build_version_plus_date=$build_version_plus_date" >> $GITHUB_OUTPUT
+          echo "gtnh_commit_hash=$gtnh_commit_hash" >> $GITHUB_OUTPUT
+      - uses: actions/checkout@v3
+      - name: downcase REPO
+        run: |
+          echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+      - uses: docker/metadata-action@v3
+        id: metadata
+        with:
+          images: ghcr.io/${{ env.REPO }}
+          tags: |
+            ${{ steps.wf-tags-and-links.outputs.build_date }}
+            ${{ steps.wf-tags-and-links.outputs.build_version }}
+            ${{ steps.wf-tags-and-links.outputs.build_version_plus_date }}
+            ${{ steps.wf-tags-and-links.outputs.gtnh_commit_hash }}
+            nightly-latest
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT_TOKEN }}
+      - uses: docker/build-push-action@v6
+        env:
+          BUILD_DATE: ${{ steps.wf-tags-and-links.outputs.build_date }}
+          BUILD_VERSION: ${{ steps.wf-tags-and-links.outputs.build_version }}
+          BUILD_VERSION_PLUS_DATE: ${{ steps.wf-tags-and-links.outputs.build_version_plus_date }}
+          GTNH_COMMIT_HASH: ${{ steps.wf-tags-and-links.outputs.gtnh_commit_hash }}
+          FILENAME: ${{ steps.wf-tags-and-links.outputs.filename }}
+          DOWNLOAD_URL: ${{ steps.wf-tags-and-links.outputs.download_path }}
+        with:
+          push: true
+          context: "./src/docker/action/"
+          tags: ${{steps.metadata.outputs.tags}}
+          #  nightly-$BUILD_DATE
+          #  nightly-$BUILD_VERSION
+          #  nightly-$BUILD_VERSION_PLUS_DATED
+          #  nightly-$GTNH_COMMIT_HASH
+          #  nightly-latest
+           
+          #TODO: BUILD ARGS and more stuff 
+          build-args: |
+            FILENAME=$FILENAME
+            DOWNLOAD_URL=$DOWNLOAD_URL
+          secrets_envs: |
+            TOKEN=${{ secrets.GITHUB_TOKEN }}
