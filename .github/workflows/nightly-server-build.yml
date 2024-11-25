@@ -115,5 +115,5 @@ jobs:
           build-args: |
             FILENAME=$FILENAME
             DOWNLOAD_URL=$DOWNLOAD_URL
-          secret_envs: |
+          secret-envs: |
             TOKEN=${{ secrets.GITHUB_TOKEN }}
