@@ -9,7 +9,10 @@ if [ -z "$2" ]; then
     echo "Missing Download URL"
     exit 1
 fi
-
+if [ -z "$3" ]; then
+    echo "Token missing"
+    exit 1
+fi
 
 # Fetch the raw download list
 #raw_download_list=$(curl -s "http://downloads.gtnewhorizons.com/ServerPacks/?raw")
@@ -24,7 +27,7 @@ fi
 url=$(echo $2 | tr -d '"')
 # Extract the filename from the URL
 filename=$(echo $1 | tr -d '"')
-tk=$(echo $TOKEN | tr -d '"')
+tk=$(echo $3 | tr -d '"')
 # Download the selected zip file
 echo "Filename: '$filename'"
 echo "Download_URL: '$url'"
