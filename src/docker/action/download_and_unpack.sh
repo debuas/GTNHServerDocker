@@ -28,10 +28,7 @@ tk=$(echo $TOKEN | tr -d '"')
 # Download the selected zip file
 echo "Downloading $1..."
 
-curl -L \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: token $tk" \
-  $url -o "$filename.zip"
+curl -L -H "Accept: application/vnd.github+json" \ -H "Authorization: token $tk" \ $url -o "$filename.zip"
 
 # Create the server directory if it doesn't exist
 mkdir -p server
