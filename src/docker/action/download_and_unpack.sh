@@ -21,7 +21,7 @@ fi
 #    echo "No matching version found for $1."
 #    exit 1
 #fi
-
+url =$(echo $2 | tr -d '"')
 # Extract the filename from the URL
 filename=$(echo $1 | tr -d '"')
 
@@ -32,7 +32,7 @@ curl -L \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer $TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  -O "$2"
+  -O "$url"
 
 # Create the server directory if it doesn't exist
 mkdir -p server
