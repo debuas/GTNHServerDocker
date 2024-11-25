@@ -11,12 +11,10 @@ RUN apt-get update && apt-get install -y curl unzip
 COPY download_and_unpack.sh .
 
 # Run the download_and_unpack.sh script to fetch and unpack files based on the version argument
-
 ARG DOWNLOAD_URL
 ARG FILENAME
 #!!Add TOKEN as secret ENV to build 
-RUN chmod +x download_and_unpack.sh && ./download_and_unpack.sh ${FILENAME} ${DOWNLOAD_URL} $TOKEN
-RUN unset TOKEN
+RUN --mount=type=secret,id=github_token,env=TOKEN chmod +x download_and_unpack.sh && ./download_and_unpack.sh ${FILENAME} ${DOWNLOAD_URL} $TOKEN
 # === Stage 2: Final Image ===
 FROM eclipse-temurin:20
 

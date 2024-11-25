@@ -115,5 +115,5 @@ jobs:
           build-args: |
             FILENAME=${{ steps.wf-tags-and-links.outputs.filename }}
             DOWNLOAD_URL=${{ steps.wf-tags-and-links.outputs.download_path }}
-          secret-envs: |
-            TOKEN=${{ secrets.PAT_TOKEN }}
+          secrets: |
+            github_token=${{ secrets.PAT_TOKEN }}
