@@ -15,8 +15,8 @@ COPY download_and_unpack.sh .
 ARG DOWNLOAD_URL
 ARG FILENAME
 #!!Add TOKEN as secret ENV to build 
-RUN chmod +x download_and_unpack.sh && ./download_and_unpack.sh ${FILENAME} ${DOWNLOAD_URL} ${TOKEN}
-
+RUN chmod +x download_and_unpack.sh && ./download_and_unpack.sh ${FILENAME} ${DOWNLOAD_URL} $TOKEN
+RUN unset TOKEN
 # === Stage 2: Final Image ===
 FROM eclipse-temurin:20
 
