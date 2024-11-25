@@ -26,6 +26,10 @@ url=$(echo $2 | tr -d '"')
 filename=$(echo $1 | tr -d '"')
 tk=$(echo $TOKEN | tr -d '"')
 # Download the selected zip file
+echo "Filename: '$filename'"
+echo "Download_URL: '$url'"
+
+
 echo "Downloading $1..."
 
 curl -L -H "Accept: application/vnd.github+json" \ -H "Authorization: token $tk" \ $url -o "$filename.zip"
@@ -34,7 +38,7 @@ curl -L -H "Accept: application/vnd.github+json" \ -H "Authorization: token $tk"
 mkdir -p server
 
 # Unpack the zip file into the "server" directory
-ls | echo
+ls | cat
 
 echo "Unpacking $filename into 'server' directory..."
 unzip "$filename.zip" -d "server"
