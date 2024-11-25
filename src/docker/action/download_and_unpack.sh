@@ -31,7 +31,6 @@ tk=$(echo $3 | tr -d '"')
 # Download the selected zip file
 echo "Filename: '$filename'"
 echo "Download_URL: '$url'"
-echo "tmp: '$tk'"
 
 echo "Downloading $1..."
 
