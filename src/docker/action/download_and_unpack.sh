@@ -24,14 +24,14 @@ fi
 url=$(echo $2 | tr -d '"')
 # Extract the filename from the URL
 filename=$(echo $1 | tr -d '"')
-
+tk=$(echo $TOKEN | tr -d '"')
 # Download the selected zip file
 echo "Downloading $1..."
 
 curl -L \
   -H "Accept: application/vnd.github+json" \
-  -H "Authorization: token $TOKEN" \
-  $url -O
+  -H "Authorization: token $tk" \
+  $url -o "$filename.zip"
 
 # Create the server directory if it doesn't exist
 mkdir -p server
@@ -40,7 +40,7 @@ mkdir -p server
 ls | echo
 
 echo "Unpacking $filename into 'server' directory..."
-unzip "./$filename" -d "server"
+unzip "$filename.zip" -d "server"
 
 # Set eula.txt to true
 echo "eula=true" > server/eula.txt
