@@ -32,9 +32,9 @@ tk=$(echo $3 | tr -d '"')
 echo "Filename: '$filename'"
 echo "Download_URL: '$url'"
 
-echo "Downloading $1..."
+echo "Downloading $filename..."
 
-curl -L -H "Accept: application/vnd.github+json" \ -H "Authorization: token $tk" \ $url -o "$filename.zip"
+curl -L -H "Accept: application/vnd.github+json" -H "Authorization: token $tk" $url -o "$filename.zip"
 
 # Create the server directory if it doesn't exist
 mkdir -p server
