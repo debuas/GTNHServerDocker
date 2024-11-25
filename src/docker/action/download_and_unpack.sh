@@ -55,8 +55,10 @@ tfp=$(echo "$filename" | sed "s/\b$pattern\b/$(echo $pattern | tr '[:lower:]' '[
 echo $tfp
 
 
-unzip "/tmp/extracted/$tfp.zip" -d "server"
+unzip "/tmp/extracted/$tfp.zip" -d "server/"
 
+ls server | cat
+ls /app/server | cat
 # Set eula.txt to true
 echo "eula=true" > server/eula.txt
 
