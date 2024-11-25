@@ -39,7 +39,7 @@ mkdir -p server
 
 # Unpack the zip file into the "server" directory
 echo "Unpacking $filename into 'server' directory..."
-unzip "$filename" -d "server"
+unzip "./$filename" -d "server"
 
 # Set eula.txt to true
 echo "eula=true" > server/eula.txt
