@@ -38,6 +38,8 @@ curl -L \
 mkdir -p server
 
 # Unpack the zip file into the "server" directory
+ls | echo
+
 echo "Unpacking $filename into 'server' directory..."
 unzip "./$filename" -d "server"
 
