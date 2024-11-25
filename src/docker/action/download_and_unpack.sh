@@ -59,6 +59,10 @@ unzip "/tmp/extracted/$tfp.zip" -d "server/"
 
 ls server | cat
 ls /app/server | cat
+
+chmod +x /app/server/startserver-java9.sh
+
+
 # Set eula.txt to true
 echo "eula=true" > server/eula.txt
 
