@@ -113,7 +113,7 @@ jobs:
           no-cache: true 
           #TODO: BUILD ARGS and more stuff 
           build-args: |
-            FILENAME=$FILENAME
-            DOWNLOAD_URL=$DOWNLOAD_URL
+            FILENAME=${{ steps.wf-tags-and-links.outputs.filename }}
+            DOWNLOAD_URL=${{ steps.wf-tags-and-links.outputs.download_path }}
           secret-envs: |
             TOKEN=${{ secrets.GITHUB_TOKEN }}
