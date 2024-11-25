@@ -23,7 +23,7 @@ fi
 #fi
 
 # Extract the filename from the URL
-filename=$1
+filename=$(echo $1 | tr -d '"')
 
 # Download the selected zip file
 echo "Downloading $1..."
