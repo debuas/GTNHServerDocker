@@ -110,7 +110,7 @@ jobs:
           #  nightly-$BUILD_VERSION_PLUS_DATED
           #  nightly-$GTNH_COMMIT_HASH
           #  nightly-latest
-           
+          no-cache: true 
           #TODO: BUILD ARGS and more stuff 
           build-args: |
             FILENAME=$FILENAME
