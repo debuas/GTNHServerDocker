@@ -116,4 +116,4 @@ jobs:
             FILENAME=${{ steps.wf-tags-and-links.outputs.filename }}
             DOWNLOAD_URL=${{ steps.wf-tags-and-links.outputs.download_path }}
           secret-envs: |
-            TOKEN=${{ secrets.GITHUB_TOKEN }}
+            TOKEN=${{ secrets.PAT_TOKEN }}
