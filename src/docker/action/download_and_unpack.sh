@@ -21,7 +21,7 @@ fi
 #    echo "No matching version found for $1."
 #    exit 1
 #fi
-url =$(echo $2 | tr -d '"')
+url=$(echo $2 | tr -d '"')
 # Extract the filename from the URL
 filename=$(echo $1 | tr -d '"')
 
