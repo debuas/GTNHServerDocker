@@ -12,8 +12,8 @@ COPY download_and_unpack.sh .
 
 # Run the download_and_unpack.sh script to fetch and unpack files based on the version argument
 
-ARG FILENAME
 ARG DOWNLOAD_URL
+ARG FILENAME
 #!!Add TOKEN as secret ENV to build 
 RUN chmod +x download_and_unpack.sh && ./download_and_unpack.sh ${FILENAME} ${DOWNLOAD_URL}
 
