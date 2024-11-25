@@ -43,7 +43,19 @@ mkdir -p server
 ls | cat
 
 echo "Unpacking $filename into 'server' directory..."
-unzip "$filename.zip" -d "server"
+
+unzip "$filename.zip" -d "/tmp/extracted/"
+
+
+#Transform String due to to filename is completely lowercase but the extracted GTNH is in UPPERCASE
+pattern="gtnh"
+remove_pattern="-nightly"
+tfp=$(echo "$fp" | sed "s/\b$pattern\b/$(echo $pattern | tr '[:lower:]' '[:upper:]')/g" | sed "s/\b$remove_pattern\b//g")
+
+echo $tfp
+
+
+unzip "/tmp/extracted/$tfp.zip" -d "server"
 
 # Set eula.txt to true
 echo "eula=true" > server/eula.txt
