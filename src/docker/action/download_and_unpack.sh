@@ -30,9 +30,8 @@ echo "Downloading $1..."
 
 curl -L \
   -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  -O "$url"
+  -H "Authorization: token $TOKEN" \
+  $url -O
 
 # Create the server directory if it doesn't exist
 mkdir -p server
