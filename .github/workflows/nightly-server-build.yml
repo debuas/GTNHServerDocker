@@ -83,10 +83,10 @@ jobs:
         with:
           images: ghcr.io/${{ env.REPO }}
           tags: |
-            nightly-${{ steps.wf-tags-and-links.outputs.build_date }}
-            nightly-${{ steps.wf-tags-and-links.outputs.build_version }}
-            nightly-${{ steps.wf-tags-and-links.outputs.build_version_plus_date }}
-            nightly-${{ steps.wf-tags-and-links.outputs.gtnh_commit_hash }}
+            "nightly-${{ steps.wf-tags-and-links.outputs.build_date }}"
+            "nightly-${{ steps.wf-tags-and-links.outputs.build_version }}"
+            "nightly-${{ steps.wf-tags-and-links.outputs.build_version_plus_date }}"
+            "nightly-${{ steps.wf-tags-and-links.outputs.gtnh_commit_hash }}"
             nightly-latest
       - uses: docker/login-action@v1
         with:
