@@ -68,7 +68,7 @@ jobs:
           build_date=$(echo "$filename" | grep -oP '\d{4}-\d{2}-\d{2}')
           build_version=$(echo "$filename" | grep -oP '(?<=\+)\d+')
           build_version_plus_date="$build_date-$build_version"
-          gtnh_commit_hash=$(echo "$serverartifact" | jq '.workflow_run.head_sha')
+          gtnh_commit_hash=$(echo "$serverartifact" | jq '.workflow_run.head_sha' | tr -d '"')
 
           echo "build_date=$build_date" >> $GITHUB_OUTPUT
           echo "build_version=$build_version" >> $GITHUB_OUTPUT
