@@ -67,7 +67,7 @@ jobs:
           
           build_date=$(echo "$filename" | grep -oP '\d{4}-\d{2}-\d{2}')
           build_version=$(echo "$filename" | grep -oP '(?<=\+)\d+')
-          build_version_plus_date="$build_date_$build_version"
+          build_version_plus_date="$build_date-$build_version"
           gtnh_commit_hash=$(echo "$serverartifact" | jq '.workflow_run.head_sha')
 
           echo "build_date=$build_date" >> $GITHUB_OUTPUT
@@ -83,10 +83,10 @@ jobs:
         with:
           images: ghcr.io/${{ env.REPO }}
           tags: |
-            ${{ steps.wf-tags-and-links.outputs.build_date }}
-            ${{ steps.wf-tags-and-links.outputs.build_version }}
-            ${{ steps.wf-tags-and-links.outputs.build_version_plus_date }}
-            ${{ steps.wf-tags-and-links.outputs.gtnh_commit_hash }}
+            nightly-${{ steps.wf-tags-and-links.outputs.build_date }}
+            nightly-${{ steps.wf-tags-and-links.outputs.build_version }}
+            nightly-${{ steps.wf-tags-and-links.outputs.build_version_plus_date }}
+            nightly-${{ steps.wf-tags-and-links.outputs.gtnh_commit_hash }}
             nightly-latest
       - uses: docker/login-action@v1
         with:
