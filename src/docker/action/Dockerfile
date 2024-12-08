@@ -30,4 +30,4 @@ VOLUME /app/server
 # Make port 25565 available to the world outside this container
 EXPOSE 25565
 # Run the correct startup script when the container launches
-ENTRYPOINT /bin/sh ./startserver-java9.sh  # Replace with the correct script name
+ENTRYPOINT /bin/sh /app/server/startserver-java9.sh  # Replace with the correct script name
