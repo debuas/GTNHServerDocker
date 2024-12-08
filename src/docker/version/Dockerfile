@@ -11,8 +11,9 @@ RUN apt-get update && apt-get install -y curl unzip
 COPY download_and_unpack.sh .
 
 # Run the download_and_unpack.sh script to fetch and unpack files based on the version argument
-ARG VERSION=2.5.1
-RUN chmod +x download_and_unpack.sh && ./download_and_unpack.sh $VERSION
+ARG VERSION
+ARG BETA="false"
+RUN chmod +x download_and_unpack.sh && ./download_and_unpack.sh $VERSION $BETA
 
 # === Stage 2: Final Image ===
 FROM eclipse-temurin:20
