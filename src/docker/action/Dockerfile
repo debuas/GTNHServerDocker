@@ -18,7 +18,7 @@ RUN --mount=type=secret,id=github_token,env=TOKEN \
     chmod +x download_and_unpack.sh && ./download_and_unpack.sh ${FILENAME} ${DOWNLOAD_URL} ${TOKEN}
 # === Stage 2: Final Image ===
 FROM eclipse-temurin:21
-
+LABEL org.opencontainers.image.source=https://github.com/debuas/GTNHServerDocker
 # Set the working directory to /app/server
 WORKDIR /app/server
 

@@ -17,7 +17,7 @@ RUN chmod +x download_and_unpack.sh && ./download_and_unpack.sh $VERSION $BETA
 
 # === Stage 2: Final Image ===
 FROM eclipse-temurin:21
-
+LABEL org.opencontainers.image.source=https://github.com/debuas/GTNHServerDocker
 # Set the working directory to /app/server
 WORKDIR /app/server
 
