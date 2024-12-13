@@ -1,0 +1,90 @@
+name: Stable Server manual version select and build
+
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        description: GTNH version
+        required: true
+      latest:
+        description: if it should be published under stable-latest
+        type: choice
+        default: 'false'
+        options:
+          - "true"
+          - "false"
+        required: true
+
+
+
+jobs:
+  check_status:
+    runs-on: [linux,x64]
+    outputs:
+      release-tag: ${{ steps.check_status.outputs.release-tag }}
+      latest: ${{ steps.check_status.outputs.latest }}
+    steps:
+      - name: Check Status of GTNH Workflow
+        id: check_status
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          TAG: ${{ github.event.inputs.tag }}
+          LATEST: ${{ github.event.inputs.latest }}
+
+        run: |
+          semver_regex='^[0-9]+\.[0-9]+\.[0-9]+$'
+          if [[ "$TAG" =~ $semver_regex ]]; then
+            echo "::debug::tag : $TAG"
+            echo "Workflow completed successfully. Triggering dependent workflow."
+            echo "release-tag=$TAG" >> $GITHUB_OUTPUT
+          else
+            echo "No successful workflow detected. Exiting."
+            exit 1
+          fi
+          if [[ $LATEST == "true" ]]; then
+            echo "Latest Image should be build"
+            echo "latest=stable-latest">> $GITHUB_OUTPUT
+          fi
+
+  
+  build_gtnh_server_stable:
+    needs: check_status
+    if: ${{ needs.check_status.outputs.release-tag }} != ''
+    runs-on: [linux,x64]
+    steps:
+      - name: "Putshing Version to ENV"
+        env: 
+          pack_version: ${{needs.check_status.outputs.release-tag}}
+          latest: ${{ needs.check_status.outputs.latest}}
+        run: |
+          echo "VERSION=$pack_version" >> $GITHUB_ENV
+          echo "LATEST=$latest" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - name: downcase REPO
+        run: |
+          echo "REPO=${GITHUB_REPOSITORY}" >>${GITHUB_ENV}
+      - uses: docker/metadata-action@v3
+        id: metadata
+        with:
+          images: ghcr.io/${{ env.REPO }}
+          tags: |
+            "${{ env.VERSION }}"
+            "stable-${{ env.VERSION }}"
+            "${{ env.LATEST }}"
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${ github.actor }}
+          password: ${{ secrets.PAT_TOKEN}}
+      - uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: "./src/docker/version/"
+          tags: ${{ steps.metadata.outputs.tags }}
+          build-args: |
+            VERSION="${{ env.VERSION }}"
+            BETA="false"
+            
+
