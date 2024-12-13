@@ -3,7 +3,7 @@ name: Stable Server check and build
 
 on:
   schedule:
-    - cron: '45 */1 * * *' # *:45 , 45min every hour 
+    - cron: '45 15 */1 * *' # 15:45 , every day
   workflow_dispatch:
 
 
