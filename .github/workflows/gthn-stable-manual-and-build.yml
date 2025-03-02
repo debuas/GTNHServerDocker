@@ -83,6 +83,7 @@ jobs:
           push: true
           context: "./src/docker/version/"
           tags: ${{ steps.metadata.outputs.tags }}
+          no-cache: true
           build-args: |
             VERSION="${{ env.VERSION }}"
             BETA="false"
