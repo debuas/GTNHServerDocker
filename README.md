@@ -7,7 +7,10 @@
 
 ## Stable
 
-`2.7.2` ,  `stable-2.7.2` , `stable-latest`
+
+`2.7.3` ,  `stable-2.7.3` , `stable-latest`
+
+`2.7.2` ,  `stable-2.7.2` 
 
 `2.7.1` ,  `stable-2.7.1` 
 
