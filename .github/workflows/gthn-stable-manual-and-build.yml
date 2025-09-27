@@ -21,7 +21,7 @@ on:
 
 jobs:
   check_status:
-    runs-on: [linux,x64,ubuntu-latest]
+    runs-on: [linux,x64]
     outputs:
       release-tag: ${{ steps.check_status.outputs.release-tag }}
       latest: ${{ steps.check_status.outputs.latest }}
@@ -52,7 +52,7 @@ jobs:
   build_gtnh_server_stable:
     needs: check_status
     if: ${{ needs.check_status.outputs.release-tag }} != ''
-    runs-on: [linux,x64,ubuntu-latest]
+    runs-on: [linux,x64]
     steps:
       - name: "Putshing Version to ENV"
         env: 
