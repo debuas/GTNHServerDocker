@@ -32,6 +32,12 @@ if [ -z "$selected_download" ]; then
     exit 1
 fi
 
+echo "=== RESPONSE HEADERS ==="
+curl -I "$selected_download"
+
+echo "=== DOWNLOAD TRACE ==="
+curl -v -L "$selected_download" -o /dev/null
+
 filename="GTNH_Server.zip"
 
 # Extract the filename from the URL
