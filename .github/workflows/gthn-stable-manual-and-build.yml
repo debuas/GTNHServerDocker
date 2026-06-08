@@ -23,7 +23,7 @@ on:
         options:
           - "true"
           - "false
-
+        required: true
 
 jobs:
   check_status:
