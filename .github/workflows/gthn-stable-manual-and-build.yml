@@ -94,6 +94,6 @@ jobs:
           no-cache: true
           build-args: |
             VERSION="${{ env.VERSION }}"
-            BETA="${{ github.event.inputs.beta }}"
+            BETA="${{ env.BETA }}"
             
 
