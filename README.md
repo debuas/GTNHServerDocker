@@ -5,10 +5,23 @@
 
 # current versions
 
+## Beta
+
+`2.9.0-beta-1`
+
 ## Stable
 
+`2.8.4` ,  `stable-2.8.4` , `stable-latest`
 
-`2.7.3` ,  `stable-2.7.3` , `stable-latest`
+`2.8.3` ,  `stable-2.8.0`
+
+`2.8.2` ,  `stable-2.8.0`
+
+`2.8.1` ,  `stable-2.8.0`
+
+`2.8.0` ,  `stable-2.8.0`
+
+`2.7.3` ,  `stable-2.7.3`
 
 `2.7.2` ,  `stable-2.7.2` 
 
