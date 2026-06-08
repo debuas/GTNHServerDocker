@@ -31,6 +31,7 @@ jobs:
     outputs:
       release-tag: ${{ steps.check_status.outputs.release-tag }}
       latest: ${{ steps.check_status.outputs.latest }}
+      beta: ${{ steps.check_status.outputs.beta }}
     steps:
       - name: Check Status of GTNH Workflow
         id: check_status
@@ -53,6 +54,10 @@ jobs:
             echo "Latest Image should be build"
             echo "latest=stable-latest">> $GITHUB_OUTPUT
           fi
+          if [[ $BETA == "true" ]]; then
+            echo "Beta Image should be build"
+            echo "beta=true">> $GITHUB_OUTPUT
+          fi
 
   
   build_gtnh_server_stable:
@@ -64,6 +69,7 @@ jobs:
         env: 
           pack_version: ${{needs.check_status.outputs.release-tag}}
           latest: ${{ needs.check_status.outputs.latest}}
+          beta: ${{ needs.check_status.outputs.beta}}
         run: |
           echo "VERSION=$pack_version" >> $GITHUB_ENV
           echo "LATEST=$latest" >> $GITHUB_ENV
