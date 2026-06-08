@@ -16,11 +16,10 @@ fi
 baseurl="https://downloads.gtnewhorizons.com/ServerPacks/"
 
 echo "arg2=[$2]" | cat -A
+beta=$(echo "$2" | tr -d '"')
 
-if [[ "$2" =~ ^[Tt][Rr][Uu][Ee]$ ]]; then
-    echo "selecting Beta"
-    baseurl=$(echo "${baseurl}betas/")
-    echo "new baseurl : '${baseurl}'"
+if [[ "${beta,,}" == "true" ]]; then
+    baseurl="${baseurl}betas/"
 fi
 
 #versionbase="GT_New_Horizons_${1}_Server_Java_17"
