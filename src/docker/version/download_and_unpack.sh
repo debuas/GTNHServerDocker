@@ -16,7 +16,9 @@ fi
 baseurl="https://downloads.gtnewhorizons.com/ServerPacks/"
 
 if [ "$2" == "true" ]; then
-    baseurl="${baseurl}betas/"
+    echo "selecting Beta"
+    baseurl=$(echo "${baseurl}betas/")
+    echo "new baseurl : '${baseurl}'"
 fi
 
 #versionbase="GT_New_Horizons_${1}_Server_Java_17"
