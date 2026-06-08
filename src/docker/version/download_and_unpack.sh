@@ -13,7 +13,7 @@ if [ -z "$2" ]; then
     exit 1
 fi
 
-baseurl="downloads.gtnewhorizons.com/ServerPacks/"
+baseurl="https://downloads.gtnewhorizons.com/ServerPacks/"
 
 if [ "$2" == "true" ]; then
     baseurl="${baseurl}betas/"
