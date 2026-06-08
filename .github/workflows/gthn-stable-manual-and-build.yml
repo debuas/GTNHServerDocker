@@ -40,7 +40,7 @@ jobs:
           LATEST: ${{ github.event.inputs.latest }}
           BETA: ${{ github.event.inputs.beta }}
         run: |
-          semver_regex='^[0-9]+\.[0-9]+\.[0-9]+$'
+          semver_regex='^\d+\.\d+\.\d+(?:-beta-\d+)?$'
           if [[ "$TAG" =~ $semver_regex ]]; then
             echo "::debug::tag : $TAG"
             echo "Workflow completed successfully. Triggering dependent workflow."
