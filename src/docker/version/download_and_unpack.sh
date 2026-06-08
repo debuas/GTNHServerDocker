@@ -27,16 +27,12 @@ version=$(echo "$1" | tr -d '"')
 # Filter and select the right version with the non-Java8 version
 #selected_download=$(echo "$raw_download_list" | grep "GT_New_Horizons_${version}_Server_Java_[0-9]*-[0-9]*.zip" | tail -n 1)
 selected_download=$(echo "${baseurl}GT_New_Horizons_${version}_Server_Java_17-25.zip" | tail -n 1)
-if [ -z "$selected_download" ]; then
-    echo "No matching version found for $1."
+http_code=$(curl -s -o /dev/null -w "%{http_code}" "$selected_download")
+
+if [ "$http_code" != "200" ]; then
+    echo "ERROR: File not found ($http_code): $selected_download"
     exit 1
 fi
-
-echo "=== RESPONSE HEADERS ==="
-curl -I "$selected_download"
-
-echo "=== DOWNLOAD TRACE ==="
-curl -v -L "$selected_download" -o /dev/null
 
 filename="GTNH_Server.zip"
 
