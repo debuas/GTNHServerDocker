@@ -43,7 +43,7 @@ echo "Download_URL: '$selected_download'"
 
 echo "Downloading $filename..."
 
-curl -o "/tmp/$filename" $selected_download
+curl -fL --retry 3 -o "/tmp/$filename" $selected_download
 # Create the server directory if it doesn't exist
 mkdir -p server
 
