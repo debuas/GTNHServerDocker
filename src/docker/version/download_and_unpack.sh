@@ -15,7 +15,7 @@ fi
 
 baseurl="https://downloads.gtnewhorizons.com/ServerPacks/"
 
-if [ "$2" =~ ^[Tt][Rr][Uu][Ee]$ ]; then
+if [[ "$2" =~ ^[Tt][Rr][Uu][Ee]$ ]]; then
     echo "selecting Beta"
     baseurl=$(echo "${baseurl}betas/")
     echo "new baseurl : '${baseurl}'"
