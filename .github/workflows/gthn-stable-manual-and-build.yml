@@ -22,7 +22,7 @@ on:
         default: 'false'
         options:
           - "true"
-          - "false
+          - "false"
         required: true
 
 jobs:
