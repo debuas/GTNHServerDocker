@@ -5,7 +5,7 @@ FROM debian:bullseye-slim as download_stage
 WORKDIR /app
 
 # Install curl and unzip
-RUN apt-get update && apt-get install -y curl unzip
+RUN apt-get update && apt-get install -y curl unzip jq
 
 # Copy only the script into the container
 COPY download_and_unpack.sh .

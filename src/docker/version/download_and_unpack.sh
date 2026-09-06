@@ -18,18 +18,22 @@ baseurl="https://downloads.gtnewhorizons.com/ServerPacks/"
 echo "arg2=[$2]" | cat -A
 beta=$(echo "$2" | tr -d '"')
 
-if [[ "${beta,,}" == "true" ]]; then
-    baseurl="${baseurl}betas/"
-fi
+#if [[ "${beta,,}" == "true" ]]; then
+#    baseurl="${baseurl}betas/"
+#fi
 
 #versionbase="GT_New_Horizons_${1}_Server_Java_17"
-
 # Fetch the raw download list
-raw_download_list=$(curl -s "${baseurl}?raw")
+raw_download_list=$(curl -s "https://downloads.gtnewhorizons.com/versions.json")
 version=$(echo "$1" | tr -d '"')
 # Filter and select the right version with the non-Java8 version
+server_pack_url=$(echo "$raw_download_list" | jq -er --arg version "$version" '.[$version].server.java17_2XUrl')
+echo "$server_pack_url"
+
+
 #selected_download=$(echo "$raw_download_list" | grep "GT_New_Horizons_${version}_Server_Java_[0-9]*-[0-9]*.zip" | tail -n 1)
-selected_download=$(echo "${baseurl}GT_New_Horizons_${version}_Server_Java_17-25.zip" | tail -n 1)
+#selected_download=$(echo "${baseurl}GT_New_Horizons_${version}_Server_Java_17-25.zip" | tail -n 1)
+selected_download=$server_pack_url
 http_code=$(curl -s -o /dev/null -w "%{http_code}" "$selected_download")
 
 if [ "$http_code" != "200" ]; then
@@ -49,7 +53,6 @@ echo "Downloading $filename..."
 curl -fL --retry 3 -o "/tmp/$filename" $selected_download
 # Create the server directory if it doesn't exist
 mkdir -p server
-
 # Unpack the zip file into the "server" directory
 ls | cat
 
