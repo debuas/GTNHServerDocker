@@ -1,5 +1,5 @@
 # === Stage 1: Download and Unpack ===
-FROM debian:bullseye-slim as download_stage
+FROM debian:stable-slim as download_stage
 
 # Set the working directory to /app
 WORKDIR /app
