@@ -9,6 +9,10 @@
 
 `2.9.0-beta-1`
 
+## Release Candidate
+
+`2.9.0-RC-2`
+
 ## Stable
 
 `2.8.4` ,  `stable-2.8.4` , `stable-latest`
