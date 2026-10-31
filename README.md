@@ -15,7 +15,9 @@
 
 ## Stable
 
-`2.8.4` ,  `stable-2.8.4` , `stable-latest`
+`2.9.0` .  `stable-2.9.0` , `stable-latest`
+
+`2.8.4` ,  `stable-2.8.4`
 
 `2.8.3` ,  `stable-2.8.0`
 
@@ -33,11 +35,11 @@
 
 `2.7.0` ,  `stable-2.7.0` 
 
-## Nightly
+## Nightly (outdated)
 
 Nightly images are build every day from [DreamAssembler](https://github.com/GTNewHorizons/DreamAssemblerXXL/actions/workflows/nightly-modpack-build.yml) daily builds
 
-Nightly verrsions are tagged under
+Nightly versions are tagged under
 
 - `nightly-latest`
 - `nightly-<version>` 
