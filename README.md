@@ -15,7 +15,9 @@
 
 ## Stable
 
-`2.9.0` .  `stable-2.9.0` , `stable-latest`
+`2.9.1` .  `stable-2.9.1` , `stable-latest`
+
+`2.9.0` .  `stable-2.9.0`
 
 `2.8.4` ,  `stable-2.8.4`
 
